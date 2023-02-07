@@ -1,0 +1,130 @@
+html {
+    box-sizing: border-box;
+    overflow: auto;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+body {
+    font-family: Roboto sans-serif;
+    font-style: normal;
+    font-weight: 400;
+}
+ul {
+    padding: 0;
+    list-style: none;
+}
+.wrapper {
+    display: flex;
+    margin: auto;
+    width: 660px;
+    min-height: 760px;
+    background-color: #C4C4C4;
+    flex-direction: column;
+}
+
+.wrapper__input {
+    width: 500px;
+    height: 61px;
+    margin: 62px auto 0 auto;
+    background: #FFFFFF;
+    border: 1px solid black;
+    line-height: 56px;
+    font-family: Roboto sans-serif;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 400;
+    padding-left: 13px;
+}
+
+.wrapper__list-repositories {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 220px;
+    margin: 0 auto 45px auto;
+    background: #FFFFFF;
+}
+
+.wrapper__list-repositories_close {
+    display: none;
+}
+
+.wrapper__list-element {
+    width: 500px;
+    height: 44px;
+    border: 2px solid #000000;
+    padding: 13px 0 13px 13px;
+}
+
+.wrapper__list-element:hover {
+    background: #65CDF9;
+}
+
+.wrapper__save-repositories {
+    width: 504px;
+    display: flex;
+    flex-direction: column;
+    background: #E27BEB;
+    border: 1px solid #000000;
+    margin: 45px auto 0 auto;
+    min-height: 100px;
+}
+
+.wrapper__save-list {
+    display: flex;
+    justify-content: space-between;
+    width: 503px;
+    height: 101px;
+    border-bottom: 1px solid #000000;
+    z-index: 1;
+}
+
+.wrapper__button-close {
+    cursor: pointer;
+    background: #E27BEB;
+    width: 42px;
+    height: 39px;
+    position: relative;
+    border: 0;
+    margin: 31px 34px 31px 0;
+    padding: 0;
+}
+
+.wrapper__button-close:before {
+    content: '';
+    width: 50px;
+    height: 4px;
+    background-color: #FF0000;
+    position: absolute;
+    transform: rotate(-45deg);
+    z-index: 10;
+    top: 14px;
+    left: -5px;
+}
+
+.wrapper__button-close:after {
+    content: '';
+    width: 50px;
+    height: 4px;
+    background-color: #FF0000;
+    position: absolute;
+    transform: rotate(45deg);
+    z-index: 10;
+    top: 14px;
+    left: -5px;
+}
+
+.info__list {
+    margin: 8px 0 8px 16px;
+}
+
+.info__list {
+    line-height: 28px;
+    color: black;
+    font-size: 24px;
+}
+
+.info__list:not(.last-child) {
+    margin-bottom: 10px;
+}
