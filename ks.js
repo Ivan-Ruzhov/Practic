@@ -1,8 +1,19 @@
 const listFindRep = document.querySelector('[data-type = "list"]')
 const input = document.querySelector('.wrapper__input')
 const saveRep = document.querySelector('.wrapper__save-repositories')
+const arrLi = document.querySelectorAll('.wrapper__list-element')
 const mapRes = []
 
+const inputVal = function (arr) {
+    for (let i = 0; i < arrLi.length; i++) {
+        arrLi[i].textContent = arr[i].name;
+        mapRes.push({
+            Name: arr[i].name,
+            Owner: arr[i].owner.login,
+            Stars: arr[i].stargazers_count,
+        })
+    }
+}
 const createAppend = function (tagName, className, element) {
     const elem = document.createElement(tagName);
     elem.classList.add(className)
@@ -23,12 +34,12 @@ const closePup = function () {
 const findRep = function (elem, name, arr) {
     for (let i = 0; i < arr.length; i++) {
         if(name.textContent === arr[i].Name) {
-            elem.insertAdjacentHTML('afterbegin', `
-        <ul class = "info__list">
-            <li class="info__elem">Name : ${arr[i].Name}</li>
-            <li class="info__elem">Owner: ${arr[i].Owner}</li>
-            <li class="info__elem">Stars: ${arr[i].Stars}</li>
-        </ul>`)
+            const newUl = createAppend('ul', 'info__list')
+            const elemOne = createAppend('li', 'info__elem', `Name : ${arr[i].Name}`)
+            const elemTwo = createAppend('li', 'info__elem',`Owner: ${arr[i].Owner}`)
+            const elemThree = createAppend('li', 'info__elem', `Stars: ${arr[i].Stars}`)
+            newUl.append(elemOne,elemTwo,elemThree)
+            elem.append(newUl)
         }
     }
     mapRes.length = 0;
@@ -36,15 +47,13 @@ const findRep = function (elem, name, arr) {
 }
 
 const appendRep = function (event) {
-    if(input.value !== " ") {
-        const list = createAppend('li', 'wrapper__save-list');
-        const button = createAppend('button', 'wrapper__button-close')
-        list.append(button)
-        findRep(list, event.target, mapRes)
-        saveRep.append(list)
-        listFindRep.classList.add('wrapper__list-repositories_close')
-        input.value = ''
-    }
+    const list = createAppend('li', 'wrapper__save-list');
+    const button = createAppend('button', 'wrapper__button-close')
+    findRep(list, event.target, mapRes)
+    saveRep.append(list)
+    list.append(button)
+    listFindRep.classList.add('wrapper__list-repositories_close')
+    input.value = ''
 }
 
 const debounce = (fn, debounceTime) => {
@@ -63,28 +72,21 @@ const call = async function  ()  {
         await repos.then(response => response.json())
             .then(arr => arr.items)
             .then(items => {
-                const arrLi = document.querySelectorAll('.wrapper__list-element')
-                for (let i = 0; i < arrLi.length; i++) {
-                    arrLi[i].textContent = items[i].name;
-                    mapRes.push({
-                        Name: items[i].name,
-                        Owner: items[i].owner.login,
-                        Stars: items[i].stargazers_count,
-                    })
-                }
-            }).catch(e => console.error(e))
+               inputVal(items)
+            })
+        .catch(e => console.error(e))
         if (input.value === "") {
             listFindRep.classList.add('wrapper__list-repositories_close')
         }
+        return repos;
 }
 
-const open = debounce(call, 400)
-
+const open =  debounce(call, 400)
 input.addEventListener('input', open)
 
 listFindRep.addEventListener('click', appendRep)
-
 saveRep.addEventListener('click', deleteElem)
+
 
 
 
