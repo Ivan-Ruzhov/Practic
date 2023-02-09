@@ -14,6 +14,7 @@ const inputVal = function (arr) {
         })
     }
 }
+
 const createAppend = function (tagName, className, element) {
     const elem = document.createElement(tagName);
     elem.classList.add(className)
@@ -27,9 +28,9 @@ const deleteElem = function (event) {
     parent.remove()
 }
 
-const closePup = function () {
-    listFindRep.classList.add('wrapper__list-repositories_close')
-}
+// const closePup = function () {
+//     listFindRep.classList.add('wrapper__list-repositories_close')
+// }
 
 const findRep = function (elem, name, arr) {
     for (let i = 0; i < arr.length; i++) {
@@ -78,12 +79,10 @@ const call = async function  ()  {
         if (input.value === "") {
             listFindRep.classList.add('wrapper__list-repositories_close')
         }
-        return repos;
 }
 
 const open =  debounce(call, 400)
 input.addEventListener('input', open)
-
 listFindRep.addEventListener('click', appendRep)
 saveRep.addEventListener('click', deleteElem)
 
