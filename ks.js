@@ -24,8 +24,10 @@ const createAppend = function (tagName, className, element) {
     return elem;
 }
 const deleteElem = function (event) {
-    const parent = event.target.parentNode
-    parent.remove()
+    if (event.target.classList.contains('wrapper__button-close') ) {
+        const parent = event.target.parentNode
+        parent.remove()
+    }
 }
 
 // const closePup = function () {
@@ -66,22 +68,24 @@ const debounce = (fn, debounceTime) => {
         }, debounceTime)
     }
 };
+const call = function  ()  {
+    const repos = fetch(`https://api.github.com/search/repositories?q= ${input.value}&sort=stars`)
 
-const call = async function  ()  {
-        const repos = fetch(`https://api.github.com/search/repositories?q= ${input.value}&sort=stars`)
-        listFindRep.classList.remove('wrapper__list-repositories_close');
-        await repos.then(response => response.json())
-            .then(arr => arr.items)
-            .then(items => {
-               inputVal(items)
-            })
-        .catch(e => console.error(e))
+    repos.then(response => response.json())
+        .then(arr => arr.items)
+        .then(items => {
+            inputVal(items)
+            listFindRep.classList.remove('wrapper__list-repositories_close');
+        }).catch(e => console.error(e))
+    console.log(repos)
+    console.log(input.value)
         if (input.value === "") {
             listFindRep.classList.add('wrapper__list-repositories_close')
         }
+
 }
 
-const open =  debounce(call, 400)
+const open =  debounce(call, 200)
 input.addEventListener('input', open)
 listFindRep.addEventListener('click', appendRep)
 saveRep.addEventListener('click', deleteElem)
